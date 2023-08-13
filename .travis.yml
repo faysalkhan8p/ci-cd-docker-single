@@ -1,0 +1,9 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t faysalkhan8p/ci-cd-docker-single -f Dockerfile.dev .
+
+script:
+  - docker run faysalkhan8p/ci-cd-docker-single npm run test -- --coverage
