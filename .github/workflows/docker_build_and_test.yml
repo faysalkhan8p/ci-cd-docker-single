@@ -1,0 +1,20 @@
+name: Docker Build and Test
+
+on: [push, pull_request]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build the Docker image
+      run: docker build -t faysalkhan8p/ci-cd-docker-single -f Dockerfile.dev .
+
+    - name: Run tests in Docker
+      run: docker run faysalkhan8p/ci-cd-docker-single npm run test -- --coverage
+
+    # Additional step to setup Docker service if you run into permission issues
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
